@@ -4,32 +4,22 @@
  */
 package dao;
 
-import java.sql.Connection;
 import classes.Cliente;
-import java.sql.PreparedStatement;
-import view.TelaCadastrarNovoCliente;
-
-
+import static dao.ClienteDAO.login;
+import static dao.ClienteDAO.senha;
+import static dao.ClienteDAO.url;
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import view.TelaCliente;
+
 /**
  *
  * @author Chagas
  */
-public class ClienteDAO {
-   public static String url = "jdbc:mysql://localhost:3306/db_senacsports";
-   public static String login = "root";
-   public static String senha = "";
-  
- public void inserir(Cliente cliente){
+public class CompraDAO {
+    public void Adicionar(Cliente cliente){
       
      Connection conexao = null;
      String sql = "INSERT INTO cadastro_cliente(CPF, nome, endereco, email, sexo, fone, estado_civil, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -51,74 +41,7 @@ public class ClienteDAO {
      }
       
  }
-     public static Cliente Consultar(String cpf){
-            Connection conexao = null;
-        try {
-            
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conexao = DriverManager.getConnection(url, login, senha);
-            String sql = "SELECT * FROM cadastro_cliente WHERE CPF = ?;";
-        
-            PreparedStatement comandoSQL = conexao.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            comandoSQL.setString(1, cpf);
-            ResultSet rs = comandoSQL.executeQuery();
-            Cliente cliente = new Cliente();
-            rs.first();
-            cliente.setCpf(cpf);
-            cliente.setNome(rs.getString("nome"));
-            cliente.setEndereco(rs.getString("endereco"));
-            cliente.setEmail(rs.getString("email"));
-            cliente.setSexo(rs.getString("sexo"));
-            cliente.setFone(rs.getString("fone"));
-            cliente.setEstado_civil(rs.getString("estado_civil"));
-            cliente.setData_nascimento(rs.getString("data_nascimento"));
-            return cliente;
-        
-                
-            
-            
-        } catch (Exception e) {
-          
-            System.out.println(e.getMessage());
-           
-            return null;
-        }
-    }
-    public List<Cliente> listar()
-        {
-           
-             String sql = "SELECT * FROM cadastro_cliente";
-             Connection conexao = null;
-            try {
-                
-             Class.forName("com.mysql.cj.jdbc.Driver");
-             conexao = DriverManager.getConnection(url, login, senha);
-             PreparedStatement comandoSQL = conexao.prepareStatement(sql);
-           
-             ResultSet rs = comandoSQL.executeQuery();
-             List<Cliente> listaCadastro_cliente = new ArrayList<>();
-            
-             //percore o rs e salva as infromaçoes dentro de uma variavel Cliente e dps salva essa variavel dentro da lista
-             while(rs.next()){
-            Cliente cliente = new Cliente();
-            cliente.setCpf(rs.getString("CPF"));
-            cliente.setNome(rs.getString("nome"));
-            cliente.setEndereco(rs.getString("endereco"));
-            cliente.setEmail(rs.getString("email"));
-            cliente.setSexo(rs.getString("sexo"));
-            cliente.setFone(rs.getString("fone"));
-            cliente.setEstado_civil(rs.getString("estado_civil"));
-            cliente.setData_nascimento(rs.getString("data_nascimento"));
-            listaCadastro_cliente.add(cliente);
-             }
-             return listaCadastro_cliente;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return null;
-            }
-        }
-    public static boolean excluir(String cpf){
+    public static boolean deletar(String cpf){
         
         boolean retorno = false;
         Connection conexao = null;
@@ -152,7 +75,7 @@ public class ClienteDAO {
         
         return retorno;
     }
-     public static boolean alterar(Cliente obj){
+    public static boolean editar(Cliente obj){
         
         boolean retorno = false;
         Connection conexao = null;
@@ -192,7 +115,3 @@ public class ClienteDAO {
     }
     
 }
-  
-
-    
-

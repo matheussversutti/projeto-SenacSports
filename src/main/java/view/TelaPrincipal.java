@@ -76,6 +76,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnGroupTelaPrincipal.add(btnCompra);
         btnCompra.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCompra.setText("Compra");
+        btnCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompraActionPerformed(evt);
+            }
+        });
 
         btnGroupTelaPrincipal.add(btnRelatorio);
         btnRelatorio.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -205,6 +210,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
               TelaCliente tc = new TelaCliente();
               jpload.jPanelLoader(Painel, tc);
     }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
+           TelaCompra tcomp = new TelaCompra();
+           jpload.jPanelLoader(Painel, tcomp);
+    }//GEN-LAST:event_btnCompraActionPerformed
 
     /**
      * @param args the command line arguments
